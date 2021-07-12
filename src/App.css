@@ -1,0 +1,39 @@
+* {
+  color: #2A2828;
+}
+
+img {
+  width: 35px;
+  height: 35px !important;
+  margin-right: 5px;
+}
+
+nav {
+  padding: 5px;
+  border-bottom: 3.5px solid #FF2E37;
+}
+
+button .is-primary {
+  background-color: #3BC4BF
+}
+
+
+.navbar-brand {
+  align-items: center !important;
+}
+
+.is-primary {
+  color: #3BC4BF;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;  
+  margin-top: 75px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #FF2E37;
+}
+
+.section-header button {
+  margin-bottom: 5px;
+}
