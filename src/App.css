@@ -22,6 +22,10 @@ button .is-primary {
   align-items: center !important;
 }
 
+.navbar-brand h1 {
+  margin-bottom: 0 !important;
+}
+
 .is-primary {
   color: #3BC4BF;
 }
@@ -36,4 +40,18 @@ button .is-primary {
 
 .section-header button {
   margin-bottom: 5px;
+}
+
+.country-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .buttons a {
+    color: red;
+    display: none;
+  }
 }

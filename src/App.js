@@ -2,22 +2,29 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import 'bulma/css/bulma.min.css'
-import axios from 'axios'
+
+import { NavBar } from './components/NavBar'
+import { CountryList } from './components/CountryList'
+import { CountryData } from './components/CountryData'
+
+import { getCountryList } from './api'
 import _ from 'lodash'
 
 function App () {
   const [countries, setCountries] = useState([])
-  // I am setting up sortOrder so I can compare
   const [sortOrder, setSortOrder] = useState('asc')
-
+  const [selectedCountry, setSelectedCountry] = useState(null)
+  console.log(selectedCountry)
   useEffect(() => {
-    axios.get('https://api.covid19api.com/countries')
-      .then(res => setCountries(res.data))
-      // here my dependancy array is empty because I am
-      // setting a new state value for countries in my
-      // handleSort function below
-      // we would put a variable in the dependancy array if we were
-      // making a new request to the api that sets new state for our app
+    // axios.get('https://api.covid19api.com/countries')
+    // .then(res => setCountries(res.data))
+    getCountryList().then((countries) => setCountries(countries))
+
+    // here my dependancy array is empty because I am
+    // setting a new state value for countries in my
+    // handleSort function below
+    // we would put a variable in the dependancy array if we were
+    // making a new request to the api that sets new state for our app
   }, [])
 
   const handleSort = () => {
@@ -44,40 +51,18 @@ function App () {
 
   return (
     <div className='container'>
-      <nav className='navbar' role='navigation' aria-label='main navigation'>
-        <div className='navbar-brand'>
-          <img src='https://www.fairfaxcounty.gov/health/sites/health/files/Assets/images/Coronavirus/COVID-19-icon.png' alt='covid-icon' />
-          <h1 className='title'>React Covid Data</h1>
-        </div>
-
-        <div className='navbar-end'>
-          <div className='navbar-item'>
-            <div className='buttons'>
-              <a className='button is-primary'>
-                <strong>Sign up</strong>
-              </a>
-              <a className='button is-outlined'>
-                Log in
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <NavBar />
       <section>
-        <div className='section-header'>
-          <p className='is-size-4 country has-text-weight-semibold'>Countries</p>
-          {/* notice how I am only using variable name for my handleSort function with no parens */}
-          <button className='button is-primary' onClick={handleSort}>
-            {sortOrder === 'asc' ? 'Sort by Ascending' : 'Sort by Descending'}
-          </button>
-        </div>
-        {countries.map(country => {
-          return (
-            <div key={country.slug}>
-              <p>{country.Country}</p>
-            </div>
-          )
-        })}
+        {selectedCountry
+          ? <CountryData selectedCountry={selectedCountry} />
+          : (
+            <CountryList
+              countries={countries}
+              setSelectedCountry={setSelectedCountry}
+              handleSort={handleSort}
+              sortOrder={sortOrder}
+            />
+            )}
       </section>
     </div>
   )
